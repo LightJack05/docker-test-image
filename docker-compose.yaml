@@ -1,0 +1,10 @@
+name: docker-test 
+services:
+    docker-test-api:
+        ports:
+          - 5100:5100
+        restart: always
+        image: docker-test-api
+        build: .
+        environment:
+          ASPNETCORE_HTTP_PORTS: 5100
