@@ -11,7 +11,7 @@ RUN dotnet publish -o /app
 
 FROM ubuntu:rolling
 ENV ASPNETCORE_HTTP_PORTS=5000
-RUN apt update && apt install dotnet-runtime-9.0 aspnetcore-runtime-9.0 -y 
+RUN apt update && apt install dotnet-runtime-9.0 aspnetcore-runtime-9.0 curl iputils-ping -y
 EXPOSE 5000
 WORKDIR /app
 COPY --from=build /app .
