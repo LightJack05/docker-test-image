@@ -21,7 +21,7 @@ public static class Program
 
         app.MapGet("/ping", () =>
         {
-            return "pong";
+            return "foo";
         });
 
         app.Run();
