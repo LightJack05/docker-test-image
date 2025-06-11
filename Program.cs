@@ -15,6 +15,8 @@ public static class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
+        builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseHandle>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -24,8 +26,6 @@ public static class Program
         }
 
         app.UseHttpsRedirection();
-
-        builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseHandle>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
 
         app.MapGet("/ping", (DatabaseHandle databaseHandle) =>
         {
