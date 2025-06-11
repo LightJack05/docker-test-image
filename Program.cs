@@ -25,7 +25,7 @@ public static class Program
 
         app.UseHttpsRedirection();
 
-        builder.Services.AddDbContext<DatabaseHandle>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
+        builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseHandle>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
 
         app.MapGet("/ping", (DatabaseHandle databaseHandle) =>
         {
