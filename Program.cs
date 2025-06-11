@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore;
+
+namespace DockerTestImage;
+
+
 public static class Program
 {
     public static void Main(string[] args)
@@ -19,9 +25,29 @@ public static class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/ping", () =>
+        builder.Services.AddDbContext<DatabaseHandle>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
+
+        app.MapGet("/ping", (DatabaseHandle databaseHandle) =>
         {
             return "foo";
+        });
+
+        app.MapGet("/increment", (DatabaseHandle databaseHandle) =>
+        {
+            databaseHandle.Database.EnsureCreated();
+            if (databaseHandle.Counters.Count() == 0) databaseHandle.Counters.Add(new());
+            databaseHandle.Counters.FirstOrDefault().State++;
+            databaseHandle.SaveChanges();
+            return databaseHandle.Counters.FirstOrDefault().State;
+        });
+
+        app.MapGet("/reset", (DatabaseHandle databaseHandle) =>
+        {
+            databaseHandle.Database.EnsureCreated();
+            if (databaseHandle.Counters.Count() == 0) databaseHandle.Counters.Add(new());
+            databaseHandle.Counters.FirstOrDefault().State = 0;
+            databaseHandle.SaveChanges();
+            return databaseHandle.Counters.FirstOrDefault().State;
         });
 
         app.Run();
