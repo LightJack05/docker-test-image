@@ -35,7 +35,11 @@ public static class Program
         app.MapGet("/increment", (DatabaseHandle databaseHandle) =>
         {
             databaseHandle.Database.EnsureCreated();
-            if (databaseHandle.Counters.Count() == 0) databaseHandle.Counters.Add(new());
+            if (databaseHandle.Counters.Count() == 0)
+            {
+                databaseHandle.Counters.Add(new())
+                databaseHandle.SaveChanges();
+            }
             databaseHandle.Counters.FirstOrDefault().State++;
             databaseHandle.SaveChanges();
             return databaseHandle.Counters.FirstOrDefault().State;
@@ -44,7 +48,11 @@ public static class Program
         app.MapGet("/reset", (DatabaseHandle databaseHandle) =>
         {
             databaseHandle.Database.EnsureCreated();
-            if (databaseHandle.Counters.Count() == 0) databaseHandle.Counters.Add(new());
+            if (databaseHandle.Counters.Count() == 0)
+            {
+                databaseHandle.Counters.Add(new())
+                databaseHandle.SaveChanges();
+            }
             databaseHandle.Counters.FirstOrDefault().State = 0;
             databaseHandle.SaveChanges();
             return databaseHandle.Counters.FirstOrDefault().State;
