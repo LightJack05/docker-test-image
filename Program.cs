@@ -37,7 +37,7 @@ public static class Program
             databaseHandle.Database.EnsureCreated();
             if (databaseHandle.Counters.Count() == 0)
             {
-                databaseHandle.Counters.Add(new())
+                databaseHandle.Counters.Add(new());
                 databaseHandle.SaveChanges();
             }
             databaseHandle.Counters.FirstOrDefault().State++;
@@ -50,7 +50,7 @@ public static class Program
             databaseHandle.Database.EnsureCreated();
             if (databaseHandle.Counters.Count() == 0)
             {
-                databaseHandle.Counters.Add(new())
+                databaseHandle.Counters.Add(new());
                 databaseHandle.SaveChanges();
             }
             databaseHandle.Counters.FirstOrDefault().State = 0;
