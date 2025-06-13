@@ -29,7 +29,7 @@ public static class Program
 
         app.MapGet("/ping", (DatabaseHandle databaseHandle) =>
         {
-            return "bar";
+            return "pong";
         });
 
         app.MapGet("/increment", (DatabaseHandle databaseHandle) =>
